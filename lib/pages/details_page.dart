@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:recipe_app/models/mealsmodel.dart';
+import 'package:recipe_app/providers/homeprovider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 List<String> favoriteMeals = [];
@@ -15,32 +17,19 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPageState extends State<DetailsPage> {
   late Meals meals;
-  bool _favorite = false;
+  late HomePageProvider homePageProvider;
 
   void didChangeDependencies() {
     final argList = ModalRoute.of(context)!.settings.arguments as List;
     meals = argList[0];
-
+    homePageProvider = Provider.of<HomePageProvider>(context, listen: false);
     super.didChangeDependencies();
-  }
-
-  Future<void> _toggleFavorite() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      if (_favorite) {
-        favoriteMeals.remove(meals.idMeal);
-      } else {
-        favoriteMeals.add("${meals.idMeal}");
-      }
-      _favorite = !_favorite;
-    });
-
-    // Save updated favorites list to SharedPreferences
-    await prefs.setStringList('favoriteMeals', favoriteMeals);
   }
 
   @override
   Widget build(BuildContext context) {
+    final isFavorite = homePageProvider.isFavorite(meals);
+
     return Scaffold(
       appBar: AppBar(
         title: Text("${meals.strMeal} Details"),
@@ -67,12 +56,13 @@ class _DetailsPageState extends State<DetailsPage> {
                       child: CircleAvatar(
                         backgroundColor: Colors.white,
                         child: IconButton(
-                          icon: Icon(_favorite
+                          icon: Icon(isFavorite
                               ? Icons.favorite
                               : Icons.favorite_border_outlined),
-                          color: _favorite ? Colors.red : null,
+                          color: isFavorite ? Colors.red : null,
                           onPressed: () {
-                            _toggleFavorite();
+                            homePageProvider.toggleFavorite(meals);
+                            setState(() {});
                           },
                         ),
                       ),

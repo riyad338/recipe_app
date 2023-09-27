@@ -30,11 +30,22 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         appBar: AppBar(
           actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, FavoritePage.routeName);
-                },
-                icon: Icon(Icons.favorite))
+            Container(
+              width: 100,
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, FavoritePage.routeName);
+                  },
+                  icon: Column(
+                    children: [
+                      Icon(Icons.favorite),
+                      Text(
+                        "Favorite",
+                        style: TextStyle(fontSize: 12),
+                      )
+                    ],
+                  )),
+            )
           ],
           title: Text("Recipe App"),
           elevation: 0,
@@ -45,9 +56,7 @@ class _HomePageState extends State<HomePage> {
               automaticallyImplyLeading: false,
               expandedHeight: 50.h,
               backgroundColor: Colors.white,
-
               floating: true,
-
               title: Padding(
                 padding: EdgeInsets.only(left: 10.0.w),
                 child: Card(
@@ -79,10 +88,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              // flexibleSpace: FlexibleSpaceBar(
-              //   title: Text('F A N C Y A P P B A R'),
-              //   background: Container(color: Colors.deepPurple[700]),
-              // ),
             ),
             SliverToBoxAdapter(
               child: SingleChildScrollView(
@@ -169,11 +174,15 @@ class _HomePageState extends State<HomePage> {
                                             ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(15.0.r),
-                                              child: Image.network(
-                                                "${meals.strMealThumb}",
-                                                height: 150.h,
-                                                width: double.infinity,
-                                                fit: BoxFit.fill,
+                                              child: Stack(
+                                                children: [
+                                                  Image.network(
+                                                    "${meals.strMealThumb}",
+                                                    height: 150.h,
+                                                    width: double.infinity,
+                                                    fit: BoxFit.fill,
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                             Text(
