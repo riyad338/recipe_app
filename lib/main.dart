@@ -6,8 +6,11 @@ import 'package:recipe_app/pages/details_page.dart';
 import 'package:recipe_app/pages/favorite_page.dart';
 import 'package:recipe_app/pages/home_page.dart';
 import 'package:recipe_app/providers/homeprovider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => HomePageProvider()),
   ], child: const MyApp()));

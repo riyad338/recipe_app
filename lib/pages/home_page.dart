@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           actions: [
             Container(
-              width: 100,
+              width: 100.w,
               child: IconButton(
                   onPressed: () {
                     Navigator.pushNamed(context, FavoritePage.routeName);
@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
                       Icon(Icons.favorite),
                       Text(
                         "Favorite",
-                        style: TextStyle(fontSize: 12),
+                        style: TextStyle(fontSize: 12.sp),
                       )
                     ],
                   )),
@@ -118,7 +118,8 @@ class _HomePageState extends State<HomePage> {
                                         leading: CircleAvatar(
                                           backgroundColor: Colors.black12,
                                           backgroundImage: NetworkImage(
-                                              "${recipe..strMealThumb}"),
+                                            "${recipe.strMealThumb}",
+                                          ),
                                         ),
                                         title: Text("${recipe.strMeal}"),
                                       ),
@@ -185,12 +186,15 @@ class _HomePageState extends State<HomePage> {
                                                 ],
                                               ),
                                             ),
-                                            Text(
-                                              "${meals.strMeal}",
-                                              maxLines: 1,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16.sp,
+                                            FittedBox(
+                                              fit: BoxFit.contain,
+                                              child: Text(
+                                                "${meals.strMeal}",
+                                                maxLines: 1,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16.sp,
+                                                ),
                                               ),
                                             ),
                                           ],
